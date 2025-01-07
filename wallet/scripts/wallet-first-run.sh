@@ -1,5 +1,6 @@
 #!/bin/bash
 # This script is run once on first boot of the image
+
 CONTAINER_ALREADY_STARTED="WALLET_FIRST_RUN_DONE"
 if [ ! -e $CONTAINER_ALREADY_STARTED ]; then
     touch $CONTAINER_ALREADY_STARTED
@@ -22,7 +23,10 @@ sed -i "s/^api_listen_port.*/api_listen_port = $WALLET_API_LISTEN_PORT/g" /home/
 # hack to avoid complicated sed command
 sed -i "s/.*#tls_certificate_key.*/owner_api_listen_interface = \"$OWNER_API_LISTEN_INTERFACE\"/g" /home/grinuser/.grin/$GRIN_CHAIN_TYPE/grin-wallet.toml
 
+echo "$NODE_API_SECRET_PATH_REPLACED"
+
 if [ $GRIN_CHAIN_TYPE == "test" ]; then
+    echo "grin-wallet --testnet owner_api --run_foreign"
     RUST_BACKTRACE=full grin-wallet --testnet owner_api --run_foreign
 else
     grin-wallet owner_api --run_foreign

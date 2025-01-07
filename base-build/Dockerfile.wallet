@@ -11,6 +11,7 @@ FROM rust:latest as grin_wallet_build
 # needs cmake
 RUN apt-get update && apt-get -y install cmake clang curl
 #RUN apt-get -y install libreadline-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
+
 #checkout source fresh and build
 WORKDIR /usr/src
 RUN git clone https://github.com/mimblewimble/grin-wallet.git
@@ -19,10 +20,22 @@ RUN git clone https://github.com/mimblewimble/grin-wallet.git
 # DEPLOY              #
 #######################
 #Deploy binaries to a minimal image
-
 FROM grin_wallet_build as grin_wallet_contracts
 WORKDIR /usr/src/grin-wallet
-RUN git checkout contracts
+
+#nginx reverse proxy from outside => 0.0.0.0:13416 nginx => 127.0.0.1:13415
+RUN apt-get install -y systemctl
+RUN apt-get install -y nano
+RUN apt-get install -y nginx
+RUN systemctl restart nginx
+COPY ../wallet/test/contracts/grin /etc/nginx/sites-available/grin
+RUN ln -s /etc/nginx/sites-available/grin /etc/nginx/sites-enabled/
+RUN nginx -t
+RUN systemctl restart nginx
+RUN systemctl start nginx
+
+#checkout und build grin-wallet
+RUN git checkout master
 RUN cargo build --release
 LABEL maintainer="yeastplume" description="Grin Wallet - Build from contracts branch"
 RUN cp /usr/src/grin-wallet/target/release/grin-wallet /usr/bin/grin-wallet
@@ -44,4 +57,5 @@ USER grinuser
 #RUN mkdir -p /home/grinuser/.grin/main
 #RUN mkdir -p /home/grinuser/.grin/test
 WORKDIR /home/grinuser
+COPY ../wallet/test/contracts/grin /etc/nginx/sites-available/grin
 ENTRYPOINT ["/home/grinuser/wallet-first-run.sh"]

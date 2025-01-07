@@ -7,7 +7,7 @@ services:
     container_name: grin-test-monitor-container
     networks:
       - grin-testnet-network
-    image: grin-olivetin-testnet 
+    image: grin-olivetin-testnet
     environment:
       - PORT=11337
       - NODE_API_ADDR=grin-node-testnet-master-container:13413

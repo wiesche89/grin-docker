@@ -1,5 +1,6 @@
 #!/bin/bash
 # This script is run once on first boot of the image
+echo "mwixnet-first-run.sh"
 CONTAINER_ALREADY_STARTED="MWIXNET_FIRST_RUN_DONE"
 if [ ! -e $CONTAINER_ALREADY_STARTED ]; then
     touch $CONTAINER_ALREADY_STARTED
@@ -51,7 +52,8 @@ if test -d "/home/nextnode"; then
 fi
   
 if [ $GRIN_CHAIN_TYPE == "test" ]; then
-    RUST_BACKTRACE=full mwixnet --testnet --wallet_pass=$WALLET_PASSWORD
+    echo "mwixnet --testnet --wallet_pass=$WALLET_PASSWORD  --bind_addr=0.0.0.0:3000"
+    RUST_BACKTRACE=full mwixnet --testnet --wallet_pass=$WALLET_PASSWORD --bind_addr="0.0.0.0:3000"
 else
     mwixnet --wallet_pass=$WALLET_PASSWORD
 fi

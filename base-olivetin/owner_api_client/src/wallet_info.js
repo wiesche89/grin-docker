@@ -5,10 +5,14 @@ const address = process.env.OWNER_API_ADDRESS || 'host.docker.internal:3415';
 const password = process.env.WALLET_PASSWORD || '';
 
 async function main() {
+	console.log('http://' + address + '/v3/owner');
 	ownerClient.initClient('http://' + address + '/v3/owner');
 	let shared_key = await ownerClient.initSecure();
 
 	let token = await ownerClient.openWallet(password, shared_key);
+	console.log(shared_key);
+	console.log(token);
+
 	if (token == null) {
 		return
 	}

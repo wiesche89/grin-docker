@@ -97,11 +97,11 @@ seeding_type = "DNSSeed"
 
 #If the seeding type is List, the list of peers to connect to can
 #be specified as follows:
-#seeds = ["192.168.0.1:3414","192.168.0.2:3414"]
+#seeds = ["192.168.2.187:13414"]
 
 #hardcoded peer lists for allow/deny
 #will *only* connect to peers in allow list
-#peers_allow = ["192.168.0.1:3414", "192.168.0.2:3414"]
+#peers_allow = ["192.168.2.187:13414"]
 #will *never* connect to peers in deny list
 #peers_deny = ["192.168.0.3:3414", "192.168.0.4:3414"]
 #a list of preferred peers to connect to
@@ -178,7 +178,7 @@ always_stem_our_txs = true
 enable_stratum_server = false
 
 #what port and address for the stratum server to listen on
-stratum_server_addr = "127.0.0.1:3416"
+stratum_server_addr = "127.0.0.1:13416"
 
 #the amount of time, in seconds, to attempt to mine on a particular
 #header before stopping and re-collecting transactions from the pool
@@ -188,7 +188,7 @@ attempt_time_per_block = 15
 minimum_share_difficulty = 1
 
 #the wallet receiver to which coinbase rewards will be sent
-wallet_listener_url = "http://127.0.0.1:3415"
+wallet_listener_url = "http://127.0.0.1:13415"
 
 #whether to ignore the reward (mostly for testing)
 burn_reward = false
@@ -233,7 +233,7 @@ stdout_log_level = "Debug"
 log_to_file = true
 
 #log level for file: Error, Warning, Info, Debug, Trace
-file_log_level = "Debug"
+file_log_level = "Info"
 
 #log file path
 log_file_path = "/home/grinuser/.grin/test/grin-server.log"

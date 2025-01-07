@@ -5,7 +5,7 @@ services:
       service: grin-node-testnet-master
   grin-wallet-testnet-contracts:
     extends:
-      file: ../../wallet/test/contracts/docker-compose.yml
+      file: ../../wallet/test/contracts/docker-compose1.yml
       service: grin-wallet-testnet-contracts
     volumes: 
       - grin-home-testnet-master:/grin-node-home
@@ -14,7 +14,7 @@ services:
         condition: service_healthy
   grin-wallet-testnet-contracts-2:
     extends:
-      file: ../../wallet/test/contracts/docker-compose.yml
+      file: ../../wallet/test/contracts/docker-compose2.yml
       service: grin-wallet-testnet-contracts
     container_name: grin-wallet-testnet-contracts-container-2 
     environment:
@@ -38,7 +38,7 @@ services:
         condition: service_healthy
   grin-wallet-testnet-contracts-3:
     extends:
-      file: ../../wallet/test/contracts/docker-compose.yml
+      file: ../../wallet/test/contracts/docker-compose3.yml
       service: grin-wallet-testnet-contracts
     container_name: grin-wallet-testnet-contracts-container-3 
     environment:
